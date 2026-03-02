@@ -1,0 +1,1136 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All About Trees!</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    * {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes sway {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+
+    @keyframes leafFall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(100px) rotate(360deg); opacity: 0; }
+    }
+
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .swaying {
+      animation: sway 4s ease-in-out infinite;
+    }
+
+    .fact-card {
+      transition: all 0.3s ease;
+    }
+
+    .fact-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .fact-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+    }
+
+    .fact-content.open {
+      max-height: 800px;
+      padding-top: 16px;
+    }
+
+    .btn-bounce:active {
+      transform: scale(0.95);
+    }
+
+    .leaf-decoration {
+      position: absolute;
+      font-size: 24px;
+      animation: leafFall 8s linear infinite;
+    }
+
+    #app-wrapper {
+      min-height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full overflow-auto bg-sky-400">
+  <div id="app-wrapper" style="background: linear-gradient(180deg, #87CEEB 0%, #98D8AA 50%, #4A7C59 100%);">
+   <!-- Floating decorations -->
+   <div class="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+    <span class="leaf-decoration" style="left: 10%; animation-delay: 0s;">🍃</span> <span class="leaf-decoration" style="left: 30%; animation-delay: 2s;">🍂</span> <span class="leaf-decoration" style="left: 50%; animation-delay: 4s;">🌿</span> <span class="leaf-decoration" style="left: 70%; animation-delay: 1s;">🍃</span> <span class="leaf-decoration" style="left: 90%; animation-delay: 3s;">🍂</span>
+   </div>
+   <div class="relative z-10 max-w-4xl mx-auto px-4 py-8 w-full">
+    <!-- Header -->
+    <header class="text-center mb-8">
+     <div class="floating inline-block mb-4">
+      <span class="text-7xl">🌳</span>
+     </div>
+     <h1 id="main-title" class="text-4xl md:text-5xl font-bold text-white drop-shadow-lg mb-2">All About Trees!</h1>
+     <p id="subtitle" class="text-xl text-white/90 drop-shadow">Click the buttons to learn fun facts! 🌲</p>
+     <div class="mt-4 flex justify-center gap-2 flex-wrap">
+      <button onclick="changeLanguage('en-US')" class="language-btn active px-4 py-2 rounded-lg bg-white/90 text-gray-800 font-medium border-2 border-white shadow-md cursor-pointer hover:bg-white transition" data-lang="en-US">English 🇺🇸</button> <button onclick="changeLanguage('zh-CN')" class="language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition" data-lang="zh-CN">中文 🇨🇳</button> <button onclick="changeLanguage('th-TH')" class="language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition" data-lang="th-TH">ไทย 🇹🇭</button> <button onclick="changeLanguage('ja-JP')" class="language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition" data-lang="ja-JP">日本語 🇯🇵</button>
+     </div>
+    </header><!-- Main Content Grid -->
+    <div class="grid gap-4 md:gap-6">
+     <!-- What is a Tree? -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-green-400">
+      <button onclick="toggleFact('fact1', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🌲</span>
+        <h2 class="text-xl md:text-2xl font-bold text-green-700">What is a Tree?</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact1" class="fact-content">
+       <div class="bg-green-50 rounded-2xl p-4 border-2 border-green-200">
+        <p class="text-lg text-green-800 leading-relaxed">A <strong>tree</strong> is a very big plant! 🌱</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3">Trees have a hard <strong>trunk</strong> made of wood. <strong>Branches grow from the trunk.</strong> High up on the branches, <strong>leaves grow</strong> and catch the sunlight!</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3"><strong>A tree's roots stretch underground</strong> to drink water and hold the tree safe in the ground. 💧</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3">Trees can live for many, many years! <strong>Some trees have lived for thousands of years!</strong> That's much longer than people! 🎂</p>
+        <p class="text-lg text-green-800 leading-relaxed mt-3">Trees give us fresh air to breathe. They also give homes to birds and animals! 🐦</p>
+       </div>
+      </div>
+     </div><!-- Parts of a Tree -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-amber-400">
+      <button onclick="toggleFact('fact2', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🪵</span>
+        <h2 class="text-xl md:text-2xl font-bold text-amber-700">Parts of a Tree</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact2" class="fact-content">
+       <div class="bg-amber-50 rounded-2xl p-4 border-2 border-amber-200">
+        <div class="grid md:grid-cols-3 gap-4">
+         <div class="bg-white rounded-xl p-4 text-center shadow-md">
+          <span class="text-4xl block mb-2">👑</span>
+          <h3 class="font-bold text-amber-800 text-lg">Crown</h3>
+          <p class="text-amber-700 mt-2">The top of the tree! It has all the leaves and branches. Like a leafy hat! 🎩</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 text-center shadow-md">
+          <span class="text-4xl block mb-2">🪵</span>
+          <h3 class="font-bold text-amber-800 text-lg">Trunk</h3>
+          <p class="text-amber-700 mt-2">The tall, strong middle part. It holds up the whole tree! Like a strong body. 💪</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 text-center shadow-md">
+          <span class="text-4xl block mb-2">🌱</span>
+          <h3 class="font-bold text-amber-800 text-lg">Roots</h3>
+          <p class="text-amber-700 mt-2"><strong>Roots connect the tree to the ground.</strong> They drink up water and hold the tree in place. 💧</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Roots Section -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-blue-400">
+      <button onclick="toggleFact('fact-roots', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🌱</span>
+        <h2 class="text-xl md:text-2xl font-bold text-blue-700">All About Roots</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact-roots" class="fact-content">
+       <div class="bg-blue-50 rounded-2xl p-4 border-2 border-blue-200">
+        <p class="text-lg text-blue-800 leading-relaxed"><strong>Roots connect the tree to the ground.</strong> 🪴</p>
+        <p class="text-lg text-blue-800 leading-relaxed mt-3"><strong>They spread far underground,</strong> reaching out in many directions to find water. Roots are like the tree's drinking straws! 💧</p>
+        <p class="text-lg text-blue-800 leading-relaxed mt-3"><strong>Roots also store the tree's food.</strong> They save energy for when the tree needs it most, like in winter or during dry times.</p>
+        <p class="text-lg text-blue-800 leading-relaxed mt-3"><strong>Roots can be big or small.</strong> Some roots are thick and strong. Others are very, very thin—so tiny that <strong>some roots can only be seen with a microscope!</strong> 🔬</p>
+       </div>
+      </div>
+     </div><!-- Trunk Section -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-red-400">
+      <button onclick="toggleFact('fact-trunk', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🪵</span>
+        <h2 class="text-xl md:text-2xl font-bold text-red-700">All About the Trunk</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact-trunk" class="fact-content">
+       <div class="bg-red-50 rounded-2xl p-4 border-2 border-red-200">
+        <p class="text-lg text-red-800 leading-relaxed"><strong>The trunk supports the tree.</strong> It's like the tree's backbone! 💪 It holds up all the branches and leaves.</p>
+        <p class="text-lg text-red-800 leading-relaxed mt-3"><strong>Some trunks reach the top of the tree.</strong> Others split into many branches as they grow up. Each tree is different!</p>
+        <p class="text-lg text-red-800 leading-relaxed mt-3"><strong>Most trunks have five layers.</strong> 🎂 The <strong>outer layers are called bark.</strong> <strong>The bark covers the trunk</strong> and <strong>protects the inner layers</strong> from cold, sun, and bugs.</p>
+        <p class="text-lg text-red-800 leading-relaxed mt-3"><strong>One layer forms rings.</strong> 🔄 <strong>The more rings a tree has, the older it is!</strong> You can count the rings to find out the tree's age. Isn't that cool? 🔍</p>
+       </div>
+      </div>
+     </div><!-- Crown Section -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-yellow-400">
+      <button onclick="toggleFact('fact-crown', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">👑</span>
+        <h2 class="text-xl md:text-2xl font-bold text-yellow-700">All About the Crown</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact-crown" class="fact-content">
+       <div class="bg-yellow-50 rounded-2xl p-4 border-2 border-yellow-200">
+        <p class="text-lg text-yellow-800 leading-relaxed"><strong>Branches and leaves make up the crown.</strong> 👑 <strong>They give the tree its shape.</strong> That's why trees look so different from each other!</p>
+        <p class="text-lg text-yellow-800 leading-relaxed mt-3"><strong>Leaves come in many shapes and sizes.</strong> 🍃 <strong>Some are large, flat, and thin</strong> like paper. You can see light shine through them!</p>
+        <p class="text-lg text-yellow-800 leading-relaxed mt-3"><strong>Others are hard and narrow, like needles.</strong> 🌲 These are on evergreen trees. They help the tree stay warm in winter.</p>
+       </div>
+      </div>
+     </div><!-- Types of Trees -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-orange-400">
+      <button onclick="toggleFact('fact3', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">🍂</span>
+        <h2 class="text-xl md:text-2xl font-bold text-orange-700">Types of Trees</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact3" class="fact-content">
+       <div class="bg-orange-50 rounded-2xl p-4 border-2 border-orange-200">
+        <div class="grid md:grid-cols-2 gap-4">
+         <div class="bg-white rounded-xl p-4 shadow-md">
+          <div class="text-center mb-3">
+           <span class="text-5xl">🍁</span>
+          </div>
+          <h3 class="font-bold text-orange-800 text-xl text-center">Deciduous Trees</h3>
+          <p class="text-orange-700 mt-3 leading-relaxed">These trees <strong>lose their leaves</strong> in autumn. The leaves turn red, orange, and yellow first! 🎨</p>
+          <p class="text-orange-700 mt-2 leading-relaxed"><strong>Why?</strong> In winter, there is less sun. The tree goes to sleep to save energy. New leaves grow back in spring! 🌸</p>
+          <p class="text-orange-600 mt-2 text-sm font-semibold">Examples:</p>
+          <p class="text-orange-600 text-sm">🌳 Cassia</p>
+          <p class="text-orange-600 text-sm">🌳 Japanese Maple</p>
+          <p class="text-orange-600 text-sm">🌳 Teak</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 shadow-md">
+          <div class="text-center mb-3">
+           <span class="text-5xl">🌲</span>
+          </div>
+          <h3 class="font-bold text-green-800 text-xl text-center">Evergreen Trees</h3>
+          <p class="text-green-700 mt-3 leading-relaxed">These trees <strong>stay green all year</strong>! They keep their leaves or needles even in winter. ❄️</p>
+          <p class="text-green-700 mt-2 leading-relaxed"><strong>Why?</strong> Their leaves are tough and waxy. This helps them stay safe from cold and snow! 💚</p>
+          <p class="text-green-700 mt-2 leading-relaxed">Many evergreens live in <strong>tropical places like Thailand.</strong> 🌴 It's warm there, so they don't lose their leaves!</p>
+          <p class="text-green-600 mt-2 text-sm font-semibold">Examples:</p>
+          <p class="text-green-600 text-sm">🌳 Mango</p>
+          <p class="text-green-600 text-sm">🌳 Coconut</p>
+          <p class="text-green-600 text-sm">🌳 Ficus</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- How Trees Grow -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-emerald-400">
+      <button onclick="toggleFact('fact4', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">📈</span>
+        <h2 class="text-xl md:text-2xl font-bold text-emerald-700">How Trees Grow</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact4" class="fact-content">
+       <div class="bg-emerald-50 rounded-2xl p-4 border-2 border-emerald-200">
+        <div class="flex flex-wrap justify-center gap-3 mb-4">
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🌰</span> <span class="text-emerald-700 font-medium">Seed</span>
+         </div><span class="text-2xl self-center">➡️</span>
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🌱</span> <span class="text-emerald-700 font-medium">Sprout</span>
+         </div><span class="text-2xl self-center">➡️</span>
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🪴</span> <span class="text-emerald-700 font-medium">Sapling</span>
+         </div><span class="text-2xl self-center">➡️</span>
+         <div class="bg-white rounded-full px-4 py-2 shadow-md flex items-center gap-2">
+          <span class="text-2xl">🌳</span> <span class="text-emerald-700 font-medium">Tree!</span>
+         </div>
+        </div>
+        <p class="text-lg text-emerald-800 leading-relaxed">Trees start as tiny <strong>seeds</strong>. With water, sun, and soil, they grow into big, tall trees!</p>
+        <p class="text-lg text-emerald-800 leading-relaxed mt-3">Trees make their own food using sunlight! This is called <strong>photosynthesis</strong> (foh-toh-SIN-thuh-sis). 🌞</p>
+        <p class="text-lg text-emerald-800 leading-relaxed mt-3">Each year, the trunk grows a new ring inside. You can count the rings to find out how old a tree is! 🔍</p>
+       </div>
+      </div>
+     </div><!-- Fun Facts -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-purple-400">
+      <button onclick="toggleFact('fact5', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">⭐</span>
+        <h2 class="text-xl md:text-2xl font-bold text-purple-700">Fun Tree Facts!</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact5" class="fact-content">
+       <div class="bg-purple-50 rounded-2xl p-4 border-2 border-purple-200">
+        <div class="grid gap-3">
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🏆</span>
+          <p class="text-purple-800">The <strong>tallest trees</strong> in the world are taller than 30-storey buildings! They are called Redwoods.</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🎂</span>
+          <p class="text-purple-800">Some trees are <strong>over 5,000 years old</strong>! They were alive when the pyramids were built.</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🍎</span>
+          <p class="text-purple-800">Trees give us <strong>yummy foods</strong> like apples, oranges, cherries, and nuts!</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">🏠</span>
+          <p class="text-purple-800">One big tree can be home to <strong>hundreds of animals</strong>: birds, squirrels, bugs, and more!</p>
+         </div>
+         <div class="bg-white rounded-xl p-4 flex items-start gap-3 shadow-md">
+          <span class="text-3xl">💨</span>
+          <p class="text-purple-800">Trees <strong>clean our air</strong>! They breathe in bad air and breathe out fresh air for us.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Why Trees Matter -->
+     <div class="fact-card bg-white/95 rounded-3xl shadow-xl p-5 md:p-6 border-4 border-teal-400">
+      <button onclick="toggleFact('fact6', this)" class="btn-bounce w-full flex items-center justify-between text-left">
+       <div class="flex items-center gap-3">
+        <span class="text-4xl">💚</span>
+        <h2 class="text-xl md:text-2xl font-bold text-teal-700">Why Trees Matter</h2>
+       </div><span class="text-3xl transform transition-transform duration-300">➕</span> </button>
+      <div id="fact6" class="fact-content">
+       <div class="bg-teal-50 rounded-2xl p-4 border-2 border-teal-200">
+        <p class="text-lg text-teal-800 leading-relaxed mb-4">Trees are <strong>super important</strong> for our planet! Here's why:</p>
+        <div class="grid md:grid-cols-2 gap-3">
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">🌬️</span>
+          <p class="text-teal-700">They give us <strong>oxygen</strong> to breathe</p>
+         </div>
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">🌡️</span>
+          <p class="text-teal-700">They keep Earth <strong>cool</strong></p>
+         </div>
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">🦉</span>
+          <p class="text-teal-700">They give <strong>homes</strong> to animals</p>
+         </div>
+         <div class="bg-white rounded-xl p-3 flex items-center gap-3 shadow-md">
+          <span class="text-3xl">☔</span>
+          <p class="text-teal-700">They stop <strong>floods</strong></p>
+         </div>
+        </div>
+        <div class="mt-4 bg-white rounded-xl p-4 text-center shadow-md">
+         <p class="text-xl text-teal-800 font-bold">🌳 Plant a tree today! 🌳</p>
+         <p class="text-teal-600 mt-1">Every tree helps make our world better!</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div><!-- Footer -->
+    <footer class="text-center mt-8 pb-4">
+     <div class="swaying inline-block">
+      <span class="text-5xl">🌳🌲🌴</span>
+     </div>
+     <p class="text-white/80 mt-2 text-lg">Keep learning about nature! 🌿</p>
+    </footer>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "All About Trees!",
+      subtitle: "Click the buttons to learn fun facts! 🌲",
+      background_color: "#87CEEB",
+      text_color: "#166534",
+      accent_color: "#22c55e",
+      card_color: "#ffffff",
+      button_color: "#4ade80",
+      font_family: "Fredoka"
+    };
+
+    let activeCardId = null;
+    let selectedLanguage = "en-US";
+    let currentAudio = null;
+
+    // Audio URLs for each card and language
+    // Replace "your-url-here" with actual audio file URLs from ElevenLabs or your audio service
+    const audioUrls = {
+      "en-US": {
+        "fact1": "raw.githubusercontent.com/imorton-shr/tree/main/Y1%20Trees-20260227T075852Z-1-001/Y1%20Trees/English/Fact1English.mp3",
+        "fact2": "raw.githubusercontent.com/imorton-shr/tree/main/Y1%20Trees-20260227T075852Z-1-001/Y1%20Trees/English/Fact2English.mp3",
+        "fact-roots": "ID3",
+        "fact-trunk": "ID3",
+        "fact-crown": "ID3",
+        "fact3": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/SROfKEuSJqXY48SQBM9A/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080032Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=5c357ea59643b6d03c4bc23c8a64a39b1592d4cb7ddf1717dfd9a5fb2f5f8047ff8fd62592f0e094a7ca1d44c50b38dc8286a18b588facdc4f526afdbb46c84bf3ca8ca3418ca3138e48d8c42bd4144c80d9a76381d9d63e7047d742397e543410fbcdbc175ba94070dafec9e22084cbac52aecc9cf612546ff91c27960dfe67423728a2a013ee705d6f6183df96580e65e0ecc081e2b9c2eeec2ac1877356594e3281e72fd36e17605c6d847418177fe64742ab37e9a1dd919f037f758d36f182654193534b297147ef4816b54fac57d3d06aab093165ecac2ce066a6dbbc3ec33e81d7c3500b43532e5f6085c0289fc02f06e5a7ea36edc0068cd3c18c91f3",
+        "fact4": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/4nfQFcF5lMEEB15Vu4Va/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080032Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=6e1ab528ca26be6bedea301538dac74bd350bdf780fcae899b583da26da6bd40d296e6fbf4bdd9525e7d62557b81be5445784cc7a23bc8b92751af07932a095558abfa9c2794697c3a637e3f993f439ea6912dd1fff3bfaffb1ac699c2afda3eb78326112e5a7226214770df3947d73109b3a8cbd375b80a0e9ba8cce40cef853f30f7d7395151f24c29db48a230d19a5267ab0e41f27fd4bb91b3bd8cb843585a3387f1b9c30d6106938614aeb98d6155ac17748675e2495dd13c0e02a03b4fef7293faa6c83b9bf1ba9f3f2159926b4cac9b160326561f142e4d6725745fbb29a78b4fb2dd5a39a97023d77bc690f2ca24a9ddcc16098468045b7366e6eeb1",
+        "fact5": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/dRpMy9ZE2Tzt6oC0e7FN/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080032Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=268a2ab54a81b9040c81ff3a9267049369e3a2fde1cf72052999226dcaa9cefea8afdd7f4f69d27c44d0ea9bb2db82ca4481c65a5ea4f5186e38d980f6b7f4b386dbfa4220ce06dea5a3f7300b4aaa41e30e905c060c57f8ad087fe6b5b18ad9855aaf257c82230b25f39fbe48b79f57361a24620f3ca0cf706e4a3e908f75280c42faa3379694212971d448d3fabf43ca6150f18968db47cc53e62f4e870e5a229c23cd9fd4f243f7c5eaedd0f25eabad21a94e2f4dae0f5ea4fb4f32e2d5fa012c1976ec32cd4efdf3feec607a7868f2525bf39626f4102508e4aec17d64bb2484e654556910b5a473d808943f56b43ee77a2381a7771bd02ece3067f6ec69",
+        "fact6": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/RCTsgjmA7ZQVjxYVrStK/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080032Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=534393e4aef662042c77cacf79813b5751bb55424952e603c9ce3f61dfd5e99410d5ed09817c255d7ccf47d72466c207b81e88e9f3379f4af0af5583eabc50f5435baa2c7d6a4d585360e24456a087a8d0d72731655dfb3cf6d1ba9d65358f7038c77c2b4ad724bc9ffefd60229e57eddf7e7324c138ff35402d7f9427407d09678d73b06f20cfdb60342a46d6bc75f90280f62c0dbf63da8be4385080305cb37b57fea293ea0864cb10dc5bd78cea4d8bc62d711aae452340215baa6a2d19f0a86ff5d08af5dc6b5f4177910a1f3e69713fda531daf20cf0bd44d1155caf04af906bf0974b4adc32e7ddd17b40dc21732ba67d7922b411bafc977363ec2d7b5"
+      },
+      "zh-CN": {
+        "fact1": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/cRqvuiud7tYQRIpRmdIy/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080908Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=17751708fef5154a847a795ccc0e132eeace2e7bbeae55eded2f5f5cce29a1007c4df48bc429b085bba121655d37dad457a6b2c651e6bcb5ecad39337af79529532491497b26e0adf970a2caac451ad4b104c8768da4a78dba3290d2c155f4236ecd0c6aa40e7c6fd11587809b211f58ecd94e5669cfe2ea5b40792ea878a77f28fd4dd938d05866366ad1f7fc6ff6604c910f42aa4356aa3169c01c3df6a509fc6eb076ba0bba24683baf0aaad82593f0238a977db93da8732acf6d3db501d6c0caacd1d2daa1211d6d440449c602df0270cc358d2ca09857dbb22227d79d5e194afef110f2baa15aee9462ef8fceb7fb5724aa3bd328b8031d4d4e018caf21",
+        "fact2": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/HrRFha6qCwvLLu5D5Mn3/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080907Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=199ebc0ac119e62e04ee17367714519d5dc4ace86f71445b76ab3d250e4617fac761a84cba60213263c97e6d63e605e0deca889a60f87fccc561f6061d4dd277ef83e7447fafcbe2cf863f5033d959506ac1ecc6b03e2096b9f9a9bc0def9caae94c44ad6e101b3000a00a39c534fbe033c361f30b673aefe2cc7fc691f79819e9707471ca28d5074742d4ac500adf8408318dccc4844bea22bcb13ad90540c482393ab826ced0b622dac807f74b20a92d9989bfca0c27ee1aecc671eb626f024942c4420dc0e193ef206ac687b116c92c21443f9d9eaadabb3564bf4bf2c971d6bdcb741f00ec4ee7afcb397fdc84427d97546d33c5bc8ecbd7f13019190b12",
+        "fact-roots": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/CxCBJtKgMbq2tYXde2c8/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080908Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=618f8f2c5ca933fe4c5dbae6b702cd6972b06a6bdbc719ff03ec2966932c107bbc13cf5ba9eeed8676fbfb26dbb48786114d3918c7296a5220833471bb84ecd1b9c1659b6e7eda463382f0eaa3d8974f2a9bb98a5f36e0ca905bbe367d0d83664497c58fdaaf1f3deaf7bec3d9f82c72879079099ae36e5a79d1db91b7e0bdeb2ca95fa517efe27b53b004a8c5059e01ced13ce9b9e6cfe7eb3fa5d9e2cb800849fd94e06505d0efbd5db621fcbd7df3e75d8d08f4974291acdb0aa26e52a710519558b2809ebd2b6535c273d32b9f564b8559d967bb9a3c87845910495444f9b6e85cf944bf91060f76e592d328cf0d8af69f7819b77abe8d4ab7a34650a645",
+        "fact-trunk": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/yF6GG77DcL7diWktr9qG/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080908Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=90a8b7730e9af076ecb2460d68504f9a1ed1eae8eed22063aec1e4b0947c7553ddba2ddaafaf84d78d9b0af51fffdbf95ea31660ddef806e45e84b58a7f29e052a51c377d3840fd9cf52f4f645264842b9fbe3bd86ca8c064bba0fb516b0d28fd276343d85f2097ada48a8e09f47725d8672eb6dce349f9d1002247d6e7640ed7d5d53a3060cb93cecc9aface39d312b03fbeae1c08c2542d54238d45667e862a13359a43d0a700736b3381c4320bd669a3b72c5e52a26c953f503e2347cf5c270365a4f4cac527fc74902a349b8060a226c4f2d18775334f095224f98fb2a153126ab2d3b02a3bc19471383b39969214eed63de4779bd51fda9269ccafe635e",
+        "fact-crown": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/gewN0VrPPK0YlFncMuQw/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080908Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=22fbbb1b38c81aac1479bd0b248543a8e64d2a0f683c52acc7c1eb0fca04abf339b100b6c35da36beb9ab04b614a210b8f6605dfb9b428fcd1b3d7d02e1fb6182fa027bbb110bc826ab65f833b5edb273eb107a832667bac9a71a8d7e158ffe4a3dc1e28ee5f65ac98c00724c26ab5e9f6e17aeb4871893e96dda2680c70ee1a825670dea756a68ed9345d62f6e8f24b54bb53c860278c81958bea75a8d912ec124cc76692efff99379369ba5913cface420fb8394999d6386e3adc3cd9f935bf1707ac97b6af52c64a359f425f4efa4236824e62f3b927d1e75c7b448d253bdd5b11d3a5cb00700a137b0b54d220adece0b459b952580672d7337794fd2db03",
+        "fact3": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/3iHpwZv7WvSNybiQetTv/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080908Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=2e394f1886e3d4789bfdece45d5520a1c9e789242e9712576a419ea02ef71ae37811d3f9d11fd6cbbcad88b69d12066f03acddc10e3c50a1e1bec9a3afd2139bf5d9efe5d8ac824064eae6b7f80e27e3760890ef5d3ed3ffe72880a97d200125e88c097b62e301ed5b7c504014b720e483239c0c61344db8f64f8150b08797b6ec6a537d9e487faad855227ca9cc1749d33dccfc0779e9e92d468c72f088927a58f95e82759f7ba35bda0e8094a0a7c6a5a7875ba3e13e51f85a127b5dbd366130ab2de01599aefe58e2ca58002de4566354259afa84e5ef2b7981629e4f90af03a99cbd0f9ee5fa97ed68ab993ddfb6b64893e8c9d869449db6e4afe2d2667f",
+        "fact4": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/VJj1cm1MxKfph9Xm1o1z/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080908Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=60184772f09329c7e620bb7ad4bb5ac3749fe0c65edf1a401a62285c0b0f4f606b8a82a5e7848d5d511b89900f68ca3a011a3726164714e6389cef95a477718d92c3bfadd483a2a10ad95d33dbc074d3ae469347d7a7786286ba5d64054f507f068a2e4bb4c763acc90c78a1bfdfc4ddfb9daa16219b8adca67f86f142d4f0568bb79d2908d0a23ccfc2ea2e32c9d4ca7d0e63a2105727bdf1f271984a7221fa57f4c015518bb6c15c748ae905c4bfe2c696617a0ada110f9fc9ff4c01119f2e36e9a727e5406c714338e6009b0c7746b0ac94a724b25bae4dff89cc687ee912d9c20256e9b468b145d010d4cb189d4869007e55ad2213e36774a1029619e648",
+        "fact5": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/ijtGR0KZeEYmOzjHzf2w/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080908Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=44829769e9a633d6870606605e34a1b200c016fd1be58f5b0d5f34cfb96400b586f82b395a3d53923b0cdf5f302cd69cf54774b198661b95ab56d917fc92ae44ce13687c7bcfd06d11b235ef4b62a56ab2ef4c196460c915c4ac7f9f2c6e07f885cb3517e72a3c7d542e157c4cbf700f95aea40e9659ddb956d7f9fb28fb1b396511c92f561ea9ced9c81f28d6e707599a41f45386cf20361ad5e83a58c803d298fcd19775adb9eb823f4b0e421cf1502771790cd5d90a0c0e14bd403fcfa24426dd6c335efdd52c01a091bd93a8a70f04dce5eb620e1c361f48dd0b785ef320bb9fb3869d58aeb053968f7604048a89b50c853aacd6cf6f682cab0f5ea3e1cf",
+        "fact6": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/zBkLpFvDZjMC95Z5rxBr/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T080907Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=280c23a3bc410ff97b5d1fd1b82ad0f3386ad58f418b19f6039ad791a574dbb6402fa04d272d127fefa815d6e2b2d3187be451d60f9663de7512da642a31e3003b6d24f00fecb60277f30726d7de7a6601a1cc04b9913159e2c9a0dcf06c0a663f400c97d56d3488b3adf33f2dbd0bf036e4ed54c72627c5917f09e99f144138ac9dd6efa0c0b0b515923b38e0a4f85a270841dd43ebf3b789cdd3b7a04d886e7367e95d6624289d7c0b694b8730b7ac55cea02e0bfd8117c3ffd7746f215a6ff92255463da44964d3ec08e8cba534f5e8be163d35bd7597d39b4bc8ed57b3c4364c9195787936ee29489f58cdac1485137fe5f2045353896592004cfea60190"
+      },
+      "th-TH": {
+        "fact1": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/alfXKeJLsljtRXSxt6fw/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081126Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=07fdb83ef84094dc7317eb65b0e93adc2dc8ecb038f507dc5ff56cb62c885e5090443edf154622953e841c8d0fc4d4cdec2f8d1e037ccb6363ad42e476704810df2e56d53dd3c0d63fd8abed7c425f6d193de03c5e9529b6b30542ef68bfe16c97468d06116bf244dfe1c8f4b75b69c587c24a1321b30c12c48b590f704555e7c269a3285205cd59ffbd59917339e03a2cf9d49439fb8261c4dbb7070ddbc076e5377709a96b361888f712e19e4bf8e55a56432fb5560924e61cec68dab9128cc6175e5e74314d49c9dbf7ea9ff314bb19e18910cd3cd6e49b217a0411cb029334bddda39aefaf53f44a2501640cae508a6a930bed8342b811c09ca1ffe6c228",
+        "fact2": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/qLvCQS14hWdie6DObePB/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081126Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=9d7824d87f80f8f14a5992a77152a6c777c1ce0349fe454cedee60b5b7617bb4320e8a3d5b3c97bb61b8f635fe164969c0b4f75e486ac9bf22560e59313f67018688452eb9c31d878c5b4e8c060443db044fd823e080503013c9c748f30784dbf881bbb8c949c346e6aa72e8d5d4ef5db90aaf8fe2623b49424a17af302bbc6b4fb904e99ed4f1485be76b1a7d8763a58de03ca5902309e7e7616da3ea7cea2079c2b6753d71ab1bf2c01dcbf008f1b551a20a95ec7dd1afd2fc2541b9331477414378a639b956b04b21e86155e039671d2749502cb1d25d2fca908c9ea3311ca7910557310115e70d71237d2e239d4cd94b84c089b0ae44b1ba51550a6fd77e",
+        "fact-roots": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/5T3jUQqQaFf1ohqFGtGe/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081127Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=71ace0ff34dbad3270edfff4eae15b61ae3bfddfa117f69e5d2b1e5f5e122ad1a9a6f374ee09a2e934d6e5f5c796228b90fc436660e32b6dd3a18b44c80384533091553452c2d71fbb57dd878c82a104acd5f81b07fc76c07f01aee85629ba8cb7074ee1b8cf7887dc1dc7c204e04a269284301777864f3f289eb5984c00ba977eba47061c966b2b296ad797cd1a80a5390eaa10fda18cbc5578a398cb90d3568f91ca083dcd42e23e3dcc0c0c8bda832b1e61a5c68186672ee815958a562038d59eaaf71ec80f3530da1acfc0933149169968a7c8376d78626abc03adb26ff7fb809d306e102a86572d4656c6c7ea62d8f530163e03258471ea763b4ec35d11",
+        "fact-trunk": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/5KK71YvkFi4qm9CU8tJk/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081127Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=920f8b6e321f1c351b4a164b65f7185f7d5c78b15945b2d799a15b0d4952972ebd02e569725fc7785edc14fa36b3445ebb2e55fc714b749528ed7dbb809eac56003897a737b0493f5d729eb5586ce346a8d6ecfaf60faf53cee02eee5c78c796e9b7d1d93d33af053e554209849bcef9b8d9331c5608752410c5007c3435d6c44e9f3c01c4e082697aafd3e7bb07e923630784b677d9e587c095997c6027e79a6edb31b41ade713075d9fcecfcf7e8c3837535bc82cc4dd6cd88466ec7089336ab167fa9fa24dccebcc5d3a9728757c2ffe3f4a056bcb6e9da9508069f61264a7e2d57be163cf9bad8fd3b31e922cac26793a9e01fcd73d4681ad20cb8b8d789",
+        "fact-crown": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/YfTi4Z6iXEUr5OTVeZ8H/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081127Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=1ed511fcfc1ddf6781191aded052880a6a1bb7b82fbb825d5f8248f0e87014b0ca1b959973d9fa18a8ee891a72d72db5d785fc11e19e8c71278288d2fcdda753ce379e4ca552e99193d8010f09b180cc7417da1fee985b3272aeb208792f8ecce2ff8b56c965bcdfe9ac57d03e6f67de699430821165e5dd866f8caf555a0b7896444bbc0149f7fa54a7a0d6714cbc21dcba7bea46d7da168a8060a8e2e1b2c3fda2294c159d67a9b4647ce9c90bbb6ba34f9573dda8f49f66a7c5ac539e83ddeed23e7682d486fba783bc3bfd8a151abc4840d0c93f90a22066abf50e1244afc57dccbdad82022bef4f7db4bc3b0414a2823b5b77d492833bc475b79a83d590",
+        "fact3": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/j1VLvoA4Y6AT78FQOdeX/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081127Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=2e156a3d042270ce4904d2abc3bd3ffe238fb01042ba09bedfd392c67cf57eb68f1848c27e63962538769286c0e9b1c428aff30d1a9469f7810da78e2b43cea571f5835e543b762f9bac219623ad301622cd25b6db2885fec9fd77cf7427524248db4664b56fdbf4c73993c2c4f2ff191ca53b0a494754b7e3bc76c632040d525fa5cd2287c4a0e112c87dd223c65ba1a129240aa46b20075edd7c86d385c67ff5d85b572c80f0e25728864d04f142e3b02dfa81f078ddf391d9b373eb09f2bf00156d829a5684f88ecee53094c7c5672d60ea3f542d68b68299df2d10ea29e4db98ca2e1d79bd1049a4719922e8134b53b388090f34c073d1e90a48a8e64056",
+        "fact4": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/IGApsqc7rKjv0E8knY2Z/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081126Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=60eb490a77c497098d0b09559843a4962bbee8ab15b4e23d4d455495f26aec264bd39d82543f6ae944800d86b96c2fd240d24981deaa91141b40e7851d90b8e09b271122239da81640b8b32e7b30fdde050747e473a94f12292a56f2c2522105ce89716dcebdf288b8b62b3a4a580976ca2eec5b45605ebc7ecad85340a053f41179c5d14ae9a51b1775716d5d30ec137d93043641fc60829b621c12e93db4ff9502e505526f258e888512eb7532f2f913d50445d1641512f76a55a2fe9aaf38e9f46d4c3425023ebe712b0f06af7af04fbd5bfc951bd1bed18bb5204f7d551d1f01b085fad96cef2c78c449c3b68de84308ddbc05f113cad548ae54e6f6d24e",
+        "fact5": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/DJUz0eloVaxv8edveC8I/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081127Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=5a5e6ce546273d1bcc45c3a4ceda943231a00208a0b6ed528543ff29e49a5cfa11373465ee444d2456798fe4a3e7c1dfae20ccd1d156dfd15fd224b8cc470ee48f8827aa7f814b9c27a50c42d022c861c8befda01f4c7559050cdb6d8c668439bb6c8ce1b5aa9bbf7443ecfe67001d1ff6af5404f6db1060ae98087e81e8474e1a7366f0a8cbecfe57308615bdb1a70d09f5c7b50a531d9521705656af895629a2ad32e983a80acf2587bb4a2f279935ee1cd1c8e28b4a4f2b91c405a0d417b0a268db56f7869ac2cb68257928006f15100d3f5cb89fd4bdd1bdffa12a1a362a656d30e605dcd90ea848b5ded91bcaf9f863bf26c8345f19118ebfcec2a8729d",
+        "fact6": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/7wcW04vwXVbzWmNQMdUB/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081127Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=4d0171a84ed5324bf8272ac350eaa4604235d98bac086b8212b41e082b06eefbbc85fe3197cc1e6339919c71a813f4b521c58f90be1866ca96e555e273052b602400c8d4d7fc3372477b6a4c91449f064b2b34943efd68cb79914134f43df21caff3f88bd6ba8ead7d62e929b0ae09cb19c3d78c1764e9f5cd1a0fa9c58dfce911117137f78329c07da270b54934e00d8f87e35907c284412035c380d099f459a761cd55954c86b4055fa64075f93f2b18c89b53052c024f9697cd729fe0123aa6c5721dfa71409ec237f49f47c46ffd989e498c4b6cd2e1ac23be327accd05b4c8ae817d94c981818bc9f0da014a419ddee428d43cfe75c805cdb7485b56a76"
+      },
+      "ja-JP": {
+        "fact1": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/EhOuW4AJcnfRbZrQKSb3/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081447Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=3f09b53303601949c7ad3fb634587c6d9db9cd92986f1d3a9751c1a44f09cfc45af01d015d671c1c317fd9027cc6747bfc27c3f68b77f923e0dfab89af08ab83f1bf9be6622feff0216e6f0605ff4d4698865214e78d91f6bb58e3e3e321d94c65d64be8b75b8ae16014e98a1f65e7c40769f3782645ab1b736f61605bc183706828fd0f0c1272836cd369c684b02ddf43917ff6f1c70657d9efe39542e90f4ce8a75527700964355b30934154e7ad9ea8a9836fa76bda6a561409babce64377fda2e1f6d1a37e7b5bc24a7fd2c0c12a0e341effd50af150594d7b3e98ca4ba414a92a09acea1155cc0a09244e45470d322470ae0463238a577f3d5a0273bcbe",
+        "fact2": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/baLmQWLySaiGqNE51h4D/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081447Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=34a7bc857383e49d0fdc732646188f7af530da743bbd0f42db5081905ca888caa61964916210662e76ac02f8564c9f91fda5979f65aa45054de96f139d9b7f208f4f62dd78f3b40c0aacc5bf2a475c2d23814d266c20acac962da2193011a5276dc4449e4b4ae951fd6d5a12100aac0e05c3214015b3aa08568265119b32719c867f2d697fd0558e594102f956c0a90327f8092e28cb8c5baa6f609b3934c0d7e8ee8afa8c7b94f60aaad99ffd02c45805ba1806c7cb3b45cb0a04297e33638a84f38b38cf99400810530943b0bffa955b3ef143b8ba7152fd347d1bae43a00ae678ab122c435bd1291c582a316b633c3251adde390f48504f13e821960270fe",
+        "fact-roots": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/EJx276C7ljWg3FDyfXGW/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081448Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=a79bf743d8ccff113b5c42fb122006eb2f3d3df2240f6ece5674fe19b809726d097314a733cbc9bd4807adba8283317a8203c76435cb7a0bf8659bd5792ecb952ef6d75e8ca68dd0127730add606b306cc06d54bb324b4584ac51fe2cd945fe31b9b5a4062154b5ca115f4f2fa4cb6431cebe6fb3052a9a16d7f3a76855b99ab2c65cc859d708169b5f53c512e98517df73da93ac6cbe8aba9afd0ef2a014e26d582e306073047eb923659f7a3039dc2baf88f30547162cce56d2547725691a2740e9e8fcf7adc9f591bbe8d1797c8151310a941f16dd81c728f4bdbc45435ddaa793fc08773dcab191a81ec9578f0ae9a6383da04e2fa33967d57bdfb297eb8",
+        "fact-trunk": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/er19mXLkLFzXd23Ct4Du/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081448Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=8a3b5a5c7e7eb7dbd607e98253c3bb5723a7d0a6701a3c56485d758e93c22a153b5eff1014150b340235e0bd07c7744c26d159f7c8bbd2b448751cc77d3981cf801052ddc122a60dc6c4ecd1789db183ee662e6da1af3c24759b3655c28229d6f58c498554c2e02f62975d28e7952a2d5fc4efe5b6871af16c75d111926703cf0b3f6c6ee87e2ddebde5f31b92e9c429a83e14c558a9615b37b90803f50a3b23612b5bac15f6aaeb2234b48a40291abe196272f58bce3ff703e54a268005ee923f6226d29413cf34ddc66ed52c4a2e414dfbc10fbd7b29fee5d08ccf7967a029fc2449b65bacaf3bf148028d34714f90ca7b8d1bfd894b1f0df66c059c905c50",
+        "fact-crown": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/sfgy2qw2ULeIQmMaKErl/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081448Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=1e255b500d0d1a33d1cb353d09669f8c8e000ff21b039a2b3c1a0da4bf56f30cbc6473a6a83cb565876f2ac2f0ab34467e7dd21478be7516797d8c923504cf19134c25b76d410a50ff96bbd83d84345b569132a9c8139e0e8b673b0ea6203bfaaa9127d7e59c73b04e8c990d06c36a1e525450df6ae432246b889d06417bc150711282151c796a8bcdfd528e542e5711cdad6b7cf301837b1027a7477b4e08ec58a7fcc9651b36c7c4ccf971bfdeb96a14aafe17b0e57cb42b2882f4558f1dcdb737476ad07c0a20e48a6724b3e1255e564ff4ad8c8f765f2fcb6b162efeb16a37b1ef61a1c4322abcadcd7ffb62c6d0d93e0e1b85243ad254fd05a4b2291cca",
+        "fact3": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/dkAEJ1aX9sDFidxUH4zE/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081448Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=5c547441e596d68c3e28e410a9d446cbd1abc7f430b10a4bafb1a200638629e754528bc5a0c94e7c07da99a74a1c581e9f3e42436ff863fe91c6e129c36a9070fc05f7fbbad95d1702801272ffcf38ecc1567ec50ed7341f9c52529f954b3817d8741582f62d912151ccdf6f26af60c01d40b653497f49214b7f0202dc81653a55cf2301f64f938df3a857221afd34eb59c4cdbec5be3e693e5d8680231bcde64c7a852edbd6f6c0a42c59c5f9a8b7decfcf957462302b556af02ce472b423e9b5401386bce27c36575a4bbf28cb1ee0a8c42a03cfaf49add6a96542355592679d02aab471cefc55907d0ec18b706485f11d8e391d4e1a984ee3bbc684098734",
+        "fact4": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/s0FFLsxghzdW0u1VPmIl/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081448Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=5e711ea631ee0725c015f8b6db8850b65c6f573daa86683aaa30b56075210370ded936135b1f6dba7b236e33dd0dbecfd01506bc897cb68f177e1d7dc987cc09c02118504a554148770693ad8e40166b8848e9e9b181b56560ac903cdbad6e107c827191e5640e74e48a0974a2b6fb7848b4f1437e23db4bf54f7a951b29f760af5126ecb7d8351c00e3f089f5857dc805e65c834654cf2866f93a8d50985aba6b5660e0a0c66aa0db9569df7421d8f466223c72e8e04d3694c0044c0551a40196fb4053d03b7632ce8b670ae63dacc446943a2a6c15ad56ca159d7046f98a6610929a4d2ddd8fc58fbdffb7d821a83d642152e03960efcd7681421db2a60d05",
+        "fact5": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/MAdcaKEs5DcANuchaEkF/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081448Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=947c6094cd570ecb6be6d7d4917b7d2ae3ee0f37181e1f6ddf44fc8f4b8d173685c7c55bd9915b00658cbbd739b9eddc389cc7757193c06e310e29a10d85e8d8a0d1fd9f55735bddf1bc6b330c952f5a86b1acd4cb506ec96df9f6c3b59552a5d344d6addbe6aec6d4d361fec030cf41580112e5e4a3ed8c026d04556cae88d1e50571493f970d8fea8e0486ba468e529a9055d58e19b06a3eedb8b7467538fc01bcdfec4855d54128edb6360c8f40eed67208edfae7f43d73ccb4ff8bf1d58a298e36b1b54ff8e99dd95f5daf301ad39848423162f662f15bed5b5ee70828dfd694a848714b206a481f772211111bd7891f97ca1b434dab6e97edf06c015f2a",
+        "fact6": "https://storage.googleapis.com/xi-backend/database/workspace/36ff577c208b4a2bbcb5e7dc4f93d93b/content_generation/content_asset/ebqrdbvEDj5SSTPqd9y1/asset.mp3?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=xi-backend-prod%40xi-labs.iam.gserviceaccount.com%2F20260227%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260227T081448Z&X-Goog-Expires=7200&X-Goog-SignedHeaders=host&X-Goog-Signature=aa4062517b16a48904587cd9098eb308b4bb98a42f8405843afe37a8cb980d31005b50cab997d0e80aa046ed9cbdf174bda624c16a1234e4ccd46de08add44017f024f0560f3d96940b37b0a2a25d14f917ab335c52cd498f58d42453d2777eb977244f00820dd1be650de27cbb9f3fa7962f93a17d24d4a1e530f4bbc657d84d83c636f4e6b8748de8d49dceaa7abf19967d863e3522a61849198be31b662d051154bf21d09050247b3eb43fde9d415813f7472b36a8d2fe8b4de8b848ad4230dbbd030e2f06f413d31c52652d75c69d02ac3aaae54c07abe065a07a256db212d2f2dbbc3c4483e3e8537a351d4ede663205ffffd220d26df1c0425e7959fb4"
+      }
+    };
+
+    function playAudio(cardId) {
+      const audioUrl = audioUrls[selectedLanguage]?.[cardId];
+      
+      // If no audio URL configured, skip playback
+      if (!audioUrl || audioUrl === "your-url-here") {
+        return;
+      }
+
+      // Stop any currently playing audio
+      stopAudio();
+
+      try {
+        currentAudio = new Audio(audioUrl);
+        currentAudio.onended = () => {
+          activeCardId = null;
+          currentAudio = null;
+        };
+        currentAudio.onerror = () => {
+          console.error(`Failed to load audio for ${cardId} in ${selectedLanguage}`);
+          activeCardId = null;
+          currentAudio = null;
+        };
+        currentAudio.play().catch(err => {
+          console.error(`Failed to play audio: ${err}`);
+          activeCardId = null;
+          currentAudio = null;
+        });
+      } catch (err) {
+        console.error(`Audio playback error: ${err}`);
+        activeCardId = null;
+      }
+    }
+
+    function stopAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+      activeCardId = null;
+    }
+
+    const translations = {
+      "en-US": {
+        "main-title": "All About Trees!",
+        "subtitle": "Click the buttons to learn fun facts! 🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "What is a Tree?",
+        "fact1-content": `A <strong>tree</strong> is a very big plant! 🌱
+
+Trees have a hard <strong>trunk</strong> made of wood. <strong>Branches grow from the trunk.</strong> High up on the branches, <strong>leaves grow</strong> and catch the sunlight!
+
+<strong>A tree's roots stretch underground</strong> to drink water and hold the tree safe in the ground. 💧
+
+Trees can live for many, many years! <strong>Some trees have lived for thousands of years!</strong> That's much longer than people! 🎂
+
+Trees give us fresh air to breathe. They also give homes to birds and animals! 🐦`,
+        "fact2-heading": "Parts of a Tree",
+        "crown-title": "Crown",
+        "crown-text": "The top of the tree! It has all the leaves and branches. Like a leafy hat! 🎩",
+        "trunk-title": "Trunk",
+        "trunk-text": "The tall, strong middle part. It holds up the whole tree! Like a strong body. 💪",
+        "roots-title": "Roots",
+        "roots-text": "<strong>Roots connect the tree to the ground.</strong> They drink up water and hold the tree in place. 💧",
+        "fact-roots-heading": "All About Roots",
+        "fact-roots-content": `<strong>Roots connect the tree to the ground.</strong> 🪴
+
+<strong>They spread far underground,</strong> reaching out in many directions to find water. Roots are like the tree's drinking straws! 💧
+
+<strong>Roots also store the tree's food.</strong> They save energy for when the tree needs it most, like in winter or during dry times.
+
+<strong>Roots can be big or small.</strong> Some roots are thick and strong. Others are very, very thin—so tiny that <strong>some roots can only be seen with a microscope!</strong> 🔬`,
+        "fact-trunk-heading": "All About the Trunk",
+        "fact-trunk-content": `<strong>The trunk supports the tree.</strong> It's like the tree's backbone! 💪 It holds up all the branches and leaves.
+
+<strong>Some trunks reach the top of the tree.</strong> Others split into many branches as they grow up. Each tree is different!
+
+<strong>Most trunks have five layers.</strong> 🎂 The <strong>outer layers are called bark.</strong> <strong>The bark covers the trunk</strong> and <strong>protects the inner layers</strong> from cold, sun, and bugs.
+
+<strong>One layer forms rings.</strong> 🔄 <strong>The more rings a tree has, the older it is!</strong> You can count the rings to find out the tree's age. Isn't that cool? 🔍`,
+        "fact-crown-heading": "All About the Crown",
+        "fact-crown-content": `<strong>Branches and leaves make up the crown.</strong> 👑 <strong>They give the tree its shape.</strong> That's why trees look so different from each other!
+
+<strong>Leaves come in many shapes and sizes.</strong> 🍃 <strong>Some are large, flat, and thin</strong> like paper. You can see light shine through them!
+
+<strong>Others are hard and narrow, like needles.</strong> 🌲 These are on evergreen trees. They help the tree stay warm in winter.`,
+        "fact3-heading": "Types of Trees",
+        "deciduous-title": "Deciduous Trees",
+        "deciduous-text": `These trees <strong>lose their leaves</strong> in autumn. The leaves turn red, orange, and yellow first! 🎨
+
+<strong>Why?</strong> In winter, there is less sun. The tree goes to sleep to save energy. New leaves grow back in spring! 🌸
+
+<strong>Examples:</strong>
+🌳 Cassia
+🌳 Japanese Maple
+🌳 Teak`,
+        "evergreen-title": "Evergreen Trees",
+        "evergreen-text": `These trees <strong>stay green all year</strong>! They keep their leaves or needles even in winter. ❄️
+
+<strong>Why?</strong> Their leaves are tough and waxy. This helps them stay safe from cold and snow! 💚
+
+Many evergreens live in <strong>tropical places like Thailand.</strong> 🌴 It's warm there, so they don't lose their leaves!
+
+<strong>Examples:</strong>
+🌳 Mango
+🌳 Coconut
+🌳 Ficus`,
+        "fact4-heading": "How Trees Grow",
+        "seed": "Seed",
+        "sprout": "Sprout",
+        "sapling": "Sapling",
+        "tree": "Tree!",
+        "fact4-content": `Trees start as tiny <strong>seeds</strong>. With water, sun, and soil, they grow into big, tall trees!
+
+Trees make their own food using sunlight! This is called <strong>photosynthesis</strong> (foh-toh-SIN-thuh-sis). 🌞
+
+Each year, the trunk grows a new ring inside. You can count the rings to find out how old a tree is! 🔍`,
+        "fact5-heading": "Fun Tree Facts!",
+        "fact5-1": "The <strong>tallest trees</strong> in the world are taller than 30-storey buildings! They are called Redwoods.",
+        "fact5-2": "Some trees are <strong>over 5,000 years old</strong>! They were alive when the pyramids were built.",
+        "fact5-3": "Trees give us <strong>yummy foods</strong> like apples, oranges, cherries, and nuts!",
+        "fact5-4": "One big tree can be home to <strong>hundreds of animals</strong>: birds, squirrels, bugs, and more!",
+        "fact5-5": "Trees <strong>clean our air</strong>! They breathe in bad air and breathe out fresh air for us.",
+        "fact6-heading": "Why Trees Matter",
+        "fact6-intro": "Trees are <strong>super important</strong> for our planet! Here's why:",
+        "fact6-1": "They give us <strong>oxygen</strong> to breathe",
+        "fact6-2": "They keep Earth <strong>cool</strong>",
+        "fact6-3": "They give <strong>homes</strong> to animals",
+        "fact6-4": "They stop <strong>floods</strong>",
+        "fact6-final": "🌳 Plant a tree today! 🌳",
+        "fact6-final-text": "Every tree helps make our world better!",
+        "footer-text": "Keep learning about nature! 🌿"
+      },
+      "zh-CN": {
+        "main-title": "关于树木的一切！",
+        "subtitle": "点击按钮了解有趣的事实！🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "什么是树木？",
+        "fact1-content": `<strong>树</strong>是一种非常大的植物！🌱
+
+树有一个坚硬的<strong>树干</strong>，由木头制成。<strong>树枝从树干生长出来。</strong>在树枝的高处，<strong>叶子生长</strong>并捕捉阳光！
+
+<strong>树根深入地下</strong>吸收水分，并将树木固定在地上。💧
+
+树木可以活很多年！<strong>有些树已经活了数千年！</strong>这比人类寿命长得多！🎂
+
+树给我们新鲜空气呼吸。它们也给鸟类和动物提供家园！🐦`,
+        "fact2-heading": "树的各部分",
+        "crown-title": "树冠",
+        "crown-text": "树的顶部！它有所有的叶子和树枝。就像一个多叶的帽子！🎩",
+        "trunk-title": "树干",
+        "trunk-text": "高大、结实的中间部分。它支撑整棵树！就像强壮的身体。💪",
+        "roots-title": "树根",
+        "roots-text": "<strong>树根连接树和地面。</strong>它们吸收水并将树固定在原地。💧",
+        "fact-roots-heading": "关于树根的一切",
+        "fact-roots-content": `<strong>树根连接树和地面。</strong>🪴
+
+<strong>它们在地下蔓延，</strong>向多个方向延伸以寻找水。树根就像树的吸管！💧
+
+<strong>树根还储存树的养分。</strong>它们保存能量供树在最需要的时候使用，比如冬天或干旱时期。
+
+<strong>树根有大有小。</strong>有些根又厚又坚实。有些根非常细，细到<strong>有些根只能用显微镜才能看到！</strong>🔬`,
+        "fact-trunk-heading": "关于树干的一切",
+        "fact-trunk-content": `<strong>树干支撑树木。</strong>就像树的脊骨！💪它支撑所有的树枝和叶子。
+
+<strong>有些树干一直延伸到树的顶部。</strong>其他的在向上生长时分裂成许多分枝。每棵树都不一样！
+
+<strong>大多数树干有五层。</strong>🎂<strong>外层称为树皮。</strong><strong>树皮覆盖树干</strong>并<strong>保护内层</strong>免受寒冷、阳光和虫子的伤害。
+
+<strong>其中一层形成年轮。</strong>🔄<strong>树的年轮越多，树就越老！</strong>你可以数年轮来找出树的年龄。这不是很酷吗？🔍`,
+        "fact-crown-heading": "关于树冠的一切",
+        "fact-crown-content": `<strong>树枝和叶子组成树冠。</strong>👑<strong>它们给树赋予形状。</strong>这就是为什么树看起来彼此不同！
+
+<strong>叶子有多种形状和大小。</strong>🍃<strong>有些又大又平又薄</strong>如纸一样。你可以看到光线透过它们！
+
+<strong>其他的又硬又窄，像针一样。</strong>🌲这些在常青树上。它们帮助树在冬天保持温暖。`,
+        "fact3-heading": "树的类型",
+        "deciduous-title": "落叶树",
+        "deciduous-text": `这些树<strong>在秋天落叶</strong>。叶子先变成红色、橙色和黄色！🎨
+
+<strong>为什么？</strong>冬天阳光较少。树进入睡眠状态以节省能量。春天新叶会长出来！🌸
+
+<strong>例子：</strong>
+🌳 槐树
+🌳 日本枫
+🌳 柚木`,
+        "evergreen-title": "常青树",
+        "evergreen-text": `这些树<strong>全年保持绿色</strong>！即使在冬天它们也保持叶子或针叶。❄️
+
+<strong>为什么？</strong>它们的叶子又硬又有蜡质。这有助于它们在寒冷和雪中保持安全！💚
+
+许多常青树生长在<strong>泰国等热带地区。</strong>🌴那里很温暖，所以它们不会失去叶子！
+
+<strong>例子：</strong>
+🌳 芒果
+🌳 椰子
+🌳 榕树`,
+        "fact4-heading": "树如何生长",
+        "seed": "种子",
+        "sprout": "芽",
+        "sapling": "树苗",
+        "tree": "树！",
+        "fact4-content": `树开始时是微小的<strong>种子</strong>。有了水、阳光和土壤，它们长成高大的树！
+
+树用阳光制造自己的食物！这叫做<strong>光合作用</strong>（guāng-hé-zuòyòng）。🌞
+
+每年，树干内部长出一个新的年轮。你可以数年轮来找出树的年龄！🔍`,
+        "fact5-heading": "有趣的树木事实！",
+        "fact5-1": "世界上<strong>最高的树</strong>比30层楼还高！它们被称为红杉。",
+        "fact5-2": "<strong>有些树已经有5000多年历史了</strong>！当金字塔被建造时，它们就已经活着了。",
+        "fact5-3": "树给我们提供<strong>美味的食物</strong>，如苹果、橙子、樱桃和坚果！",
+        "fact5-4": "一棵大树可以是<strong>数百只动物</strong>的家：鸟类、松鼠、昆虫等！",
+        "fact5-5": "树<strong>清洁我们的空气</strong>！它们吸入坏空气，呼出新鲜空气给我们。",
+        "fact6-heading": "树为什么重要",
+        "fact6-intro": "树对我们的星球<strong>非常重要</strong>！原因如下：",
+        "fact6-1": "它们给我们提供<strong>氧气</strong>呼吸",
+        "fact6-2": "它们让地球<strong>保持凉爽</strong>",
+        "fact6-3": "它们为<strong>动物提供家园</strong>",
+        "fact6-4": "它们防止<strong>洪水</strong>",
+        "fact6-final": "🌳 今天种一棵树！🌳",
+        "fact6-final-text": "每棵树都有助于让我们的世界变得更好！",
+        "footer-text": "继续学习大自然！🌿"
+      },
+      "th-TH": {
+        "main-title": "เรียนรู้เกี่ยวกับต้นไม้ทั้งหมด!",
+        "subtitle": "คลิกปุ่มเพื่อเรียนรู้ข้อเท็จจริงที่สนุก! 🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "ต้นไม้คืออะไร?",
+        "fact1-content": `<strong>ต้นไม้</strong>เป็นพืชขนาดใหญ่มาก! 🌱
+
+ต้นไม้มี<strong>ลำต้น</strong>ที่เป็นไม้แข็ง <strong>กิ่งก้านโผล่ออกมาจากลำต้น</strong> สูงขึ้นไปบนกิ่ง <strong>ใบไม้จะแตกออกมา</strong>และรับแสงแดด!
+
+<strong>รากของต้นไม้ยืดออกไปใต้ดิน</strong>เพื่อดูดน้ำและยึดต้นไม้ไว้ในดิน 💧
+
+ต้นไม้สามารถมีชีวิตอยู่มาหลายปีแล้ว! <strong>บางต้นไม้มีอายุหลายพันปี!</strong> นั่นนานกว่าคนเรามากกว่า! 🎂
+
+ต้นไม้ให้อากาศบริสุทธิ์ให้เราหายใจ พวกมันยังให้บ้านกับนกและสัตว์ป่า! 🐦`,
+        "fact2-heading": "ส่วนต่างๆของต้นไม้",
+        "crown-title": "มงกุฎ",
+        "crown-text": "ด้านบนของต้นไม้! มีใบไม้และกิ่งก้านทั้งหมด เหมือนหมวกใบไม้! 🎩",
+        "trunk-title": "ลำต้น",
+        "trunk-text": "ส่วนตรงกลางที่สูงและแข็งแรง มันยึดต้นไม้ทั้งหมด! เหมือนกายที่แข็งแรง 💪",
+        "roots-title": "ราก",
+        "roots-text": "<strong>ราตเชื่อมต้นไม้กับดิน</strong> พวกมันดูดน้ำและยึดต้นไม้ไว้ในที่ 💧",
+        "fact-roots-heading": "ทั้งหมดเกี่ยวกับรากของต้นไม้",
+        "fact-roots-content": `<strong>รากเชื่อมต้นไม้กับดิน</strong> 🪴
+
+<strong>พวกเขากระจายออกไปใต้ดิน</strong>ยืดออกไปในหลายทิศเพื่อหาน้ำ ราตเหมือนหลอด吸น้ำของต้นไม้! 💧
+
+<strong>รากยังเก็บอาหารของต้นไม้</strong> พวกมันบันทึกพลังงานสำหรับเมื่อต้นไม้ต้องการมากที่สุด เช่นในฤดูหนาวหรือช่วงแล้ง
+
+<strong>รากอาจใหญ่หรือเล็กได้</strong> บางรากหนาและแข็งแรง บางรากบางมากเสียจนว่า<strong>บางรากมองไม่เห็นด้วยตาเปล่าเท่านั้น!</strong> 🔬`,
+        "fact-trunk-heading": "เรียนรู้ทั้งหมดเกี่ยวกับลำต้น",
+        "fact-trunk-content": `<strong>ลำต้นรองรับต้นไม้</strong> มันเหมือนกระดูกสันหลังของต้นไม้! 💪 มันยึดกิ่งและใบไม้ทั้งหมด
+
+<strong>บางลำต้นยืดไปถึงด้านบนของต้นไม้</strong> บางอันแยกออกเป็นกิ่งมากมายขณะที่เติบโต แต่ละต้นไม้ก็แตกต่างกัน!
+
+<strong>ลำต้นส่วนใหญ่มี 5 ชั้น</strong> 🎂 <strong>ชั้นด้านนอกเรียกว่าเปลือก</strong> <strong>เปลือกปกคลุมลำต้น</strong>และ<strong>ป้องกันชั้นด้านในจาก</strong>ความหนาว แดด และแมลง
+
+<strong>ชั้นหนึ่งเกิดเป็นวงแหวน</strong> 🔄 <strong>ต้นไม้มีวงแหวนมากเท่าไหร่ก็แก่มากเท่านั้น!</strong> คุณสามารถนับวงแหวนเพื่อหาอายุของต้นไม้ นั่นเจ๋งไหม? 🔍`,
+        "fact-crown-heading": "เรียนรู้ทั้งหมดเกี่ยวกับมงกุฎ",
+        "fact-crown-content": `<strong>กิ่งและใบไม้ประกอบเป็นมงกุฎ</strong> 👑 <strong>พวกเขาให้รูปร่างแก่ต้นไม้</strong> นั่นคือเหตุผลที่ต้นไม้ดูแตกต่างกันไป!
+
+<strong>ใบไม้มีหลายรูปร่างและขนาด</strong> 🍃 <strong>บางใบใหญ่ แบน และบาง</strong>เหมือนกระดาษ คุณสามารถเห็นแสงเรืองผ่านมัน!
+
+<strong>บางอันแข็งและแคบ เหมือนเข็ม</strong> 🌲 สิ่งเหล่านี้อยู่บนต้นไม้ที่เป็นนิตยสารนิรันดร์ พวกมันช่วยให้ต้นไม้อบอุ่นในฤดูหนาว`,
+        "fact3-heading": "ประเภทของต้นไม้",
+        "deciduous-title": "ต้นไม้ร่วง",
+        "deciduous-text": `ต้นไม้เหล่านี้<strong>ร่วงใบในฤดูใบไม้ร่วง</strong> ใบไม้จะเปลี่ยนเป็นสีแดง ส้ม และเหลืองก่อน! 🎨
+
+<strong>ทำไม?</strong>ในฤดูหนาวแดดน้อยลง ต้นไม้เข้านอนหลับเพื่อประหยัดพลังงาน ใบไม้ใหม่จะออกมาในฤดูใบไม้ผลิ! 🌸
+
+<strong>ตัวอย่าง:</strong>
+🌳 คนัยนิต
+🌳 เมเปิลญี่ปุ่น
+🌳 สักหา`,
+        "evergreen-title": "ต้นไม้เป็นนิตยสารนิรันดร์",
+        "evergreen-text": `ต้นไม้เหล่านี้<strong>สีเขียวตลอดปี</strong>! พวกมันเก็บใบไม้หรือเข็มไว้แม้ในฤดูหนาว ❄️
+
+<strong>ทำไม?</strong>ใบไม้ของพวกเขาแข็งและเคลือบด้วยขี้ผึ้ง สิ่งนี้ช่วยให้พวกเขาปลอดภัยจากความหนาวและหิมะ! 💚
+
+ต้นไม้เป็นนิตยสารนิรันดร์จำนวนมากอาศัยอยู่ใน<strong>พื้นที่เขตร้อนเช่นประเทศไทย</strong> 🌴 มันอบอุ่นที่นั่นจึงไม่หลนใบ!
+
+<strong>ตัวอย่าง:</strong>
+🌳 มะม่วง
+🌳 มะพร้าว
+🌳 ฟิกัส`,
+        "fact4-heading": "ต้นไม้เติบโตอย่างไร",
+        "seed": "เมล็ด",
+        "sprout": "งอก",
+        "sapling": "ต้นอ่อน",
+        "tree": "ต้นไม้!",
+        "fact4-content": `ต้นไม้เริ่มต้นจาก<strong>เมล็ด</strong>ขนาดเล็ก ด้วยน้ำ แดด และดิน พวกมันจะเติบโตเป็นต้นไม้ขนาดใหญ่!
+
+ต้นไม้สร้างอาหารของตัวเองด้วยแสงแดด! นี่เรียกว่า<strong>การสังเคราะห์ด้วยแสง</strong> 🌞
+
+ทุกปี ลำต้นจะเพิ่มวงแหวนใหม่ที่ด้านใน คุณสามารถนับวงแหวนเพื่อหาอายุของต้นไม้! 🔍`,
+        "fact5-heading": "ข้อเท็จจริงที่สนุกเกี่ยวกับต้นไม้!",
+        "fact5-1": "<strong>ต้นไม้ที่สูงที่สุด</strong>ในโลกสูงกว่าอาคาร 30 ชั้น! พวกมันเรียกว่าสน",
+        "fact5-2": "<strong>บางต้นไม้มีอายุกว่า 5000 ปี</strong>! พวกมันมีชีวิตอยู่ตอนที่พีระมิดถูกสร้าง",
+        "fact5-3": "ต้นไม้ให้อาหารอร่อยแก่เรา<strong>เช่นแอปเปิ้ล ส้ม เชอร์รี่ และถั่ว!</strong>",
+        "fact5-4": "ต้นไม้ขนาดใหญ่หนึ่งต้นสามารถเป็นบ้านให้<strong>สัตว์ร้อยตัว:</strong> นก กระรอก แมลง และอื่น ๆ!",
+        "fact5-5": "ต้นไม้<strong>ทำความสะอาดอากาศของเรา</strong>! พวกมันหายใจอากาศเสีย และหายใจออกอากาศบริสุทธิ์ให้เรา",
+        "fact6-heading": "เหตุใดต้นไม้จึงสำคัญ",
+        "fact6-intro": "ต้นไม้<strong>สำคัญมากสำหรับดาวเคราะห์ของเรา</strong>! นี่คือเหตุผล:",
+        "fact6-1": "พวกมันให้<strong>ออกซิเจน</strong>ให้เราหายใจ",
+        "fact6-2": "พวกมันให้โลก<strong>หนาวเย็น</strong>",
+        "fact6-3": "พวกมันให้<strong>บ้าน</strong>กับสัตว์",
+        "fact6-4": "พวกมันป้องกัน<strong>น้ำท่วม</strong>",
+        "fact6-final": "🌳 ปลูกต้นไม้วันนี้! 🌳",
+        "fact6-final-text": "ต้นไม้ทุกต้นช่วยให้โลกของเราดีขึ้น!",
+        "footer-text": "เรียนรู้ต่อเกี่ยวกับธรรมชาติ! 🌿"
+      },
+      "ja-JP": {
+        "main-title": "すべての木について!",
+        "subtitle": "ボタンをクリックして楽しい事実を学ぶ! 🌲",
+        "language-en": "English 🇺🇸",
+        "language-zh": "中文 🇨🇳",
+        "language-th": "ไทย 🇹🇭",
+        "language-ja": "日本語 🇯🇵",
+        "fact1-heading": "木とは何ですか?",
+        "fact1-content": `<strong>木</strong>はとても大きな植物です！🌱
+
+木には木でできた硬い<strong>幹</strong>があります。<strong>枝は幹から生えます。</strong> 枝の高いところに、<strong>葉が生え</strong>て日光を受けます!
+
+<strong>木の根は地面の下に伸び</strong>、水を吸い、木を地面に固定します。💧
+
+木は何年も生きることができます！<strong>何千年も生きた木もあります！</strong>それは人間よりずっと長いです！🎂
+
+木は呼吸する新鮮な空気をくれます。また、鳥や動物の家を提供しています！🐦`,
+        "fact2-heading": "木の部分",
+        "crown-title": "樹冠",
+        "crown-text": "木の上部！すべての葉と枝があります。葉っぱのような帽子のように！🎩",
+        "trunk-title": "幹",
+        "trunk-text": "背が高くて丈夫な真ん中の部分です。木全体を支えています！強い体のように。💪",
+        "roots-title": "根",
+        "roots-text": "<strong>根は木を地面に接続します。</strong>水を吸い上げ、木をその場に固定します。💧",
+        "fact-roots-heading": "根についてのすべて",
+        "fact-roots-content": `<strong>根は木を地面に接続します。</strong>🪴
+
+<strong>水を見つけるために、地下に広がり、</strong>多くの方向に伸びます。根は木の飲む管のようなものです！💧
+
+<strong>根は木の食べ物も保存します。</strong>冬や乾季など、木が最も必要とするときのために、エネルギーを節約します。
+
+<strong>根は大きくも小さくもできます。</strong>太くて丈夫な根もあります。他のものは非常に薄く、<strong>顕微鏡でのみ見える根さえあります！</strong>🔬`,
+        "fact-trunk-heading": "幹についてのすべて",
+        "fact-trunk-content": `<strong>幹は木を支えます。</strong>それは木の脊椎のようなものです！💪 すべての枝と葉を支えています。
+
+<strong>ある幹は木の上まで達します。</strong>他のものは成長するにつれて多くの枝に分かれます。各木は異なります！
+
+<strong>ほとんどの幹は5層あります。</strong>🎂 <strong>外層は樹皮と呼ばれます。</strong><strong>樹皮は幹を覆い、</strong><strong>内層を</strong>寒冷、日光、虫から保護します。
+
+<strong>1つの層が輪を形成します。</strong>🔄 <strong>木が多くの輪を持つほど、それは古いです！</strong>輪を数えることで木の年齢を知ることができます。クールではありませんか？🔍`,
+        "fact-crown-heading": "樹冠についてのすべて",
+        "fact-crown-content": `<strong>枝と葉が樹冠を構成します。</strong>👑 <strong>彼らは木に形を与えます。</strong>それが木がお互いに異なって見える理由です！
+
+<strong>葉はさまざまな形とサイズで見えます。</strong>🍃 <strong>大きくて平らで薄い</strong>紙のように。光がそれらを通して輝くのを見ることができます！
+
+<strong>他の人は固くて狭く、針のようです。</strong>🌲 これらは常緑樹にあります。冬に木を暖かく保つのに役立ちます。`,
+        "fact3-heading": "木の種類",
+        "deciduous-title": "落葉樹",
+        "deciduous-text": `これらの木は<strong>秋に葉を落とします</strong>。葉は最初に赤、オレンジ、黄色に変わります！🎨
+
+<strong>なぜ?</strong>冬には太陽が少なくなります。木は眠りについてエネルギーを節約します。春に新しい葉が生えます！🌸
+
+<strong>例：</strong>
+🌳 センイチノキ
+🌳 日本カエデ
+🌳 チーク`,
+        "evergreen-title": "常緑樹",
+        "evergreen-text": `これらの木は<strong>一年中緑色のままです</strong>！冬でも葉や針を保ちます。❄️
+
+<strong>なぜ?</strong>彼らの葉は硬くてワックスのようなものです。これは彼らが寒冷と雪から安全に保つのに役立ちます！💚
+
+多くの常緑樹は<strong>タイのような熱帯地域に住んでいます。</strong>🌴 そこは暖かいので、落葉しません！
+
+<strong>例：</strong>
+🌳 マンゴー
+🌳 ココナッツ
+🌳 フィカス`,
+        "fact4-heading": "木はどのように成長するか",
+        "seed": "種子",
+        "sprout": "芽",
+        "sapling": "苗木",
+        "tree": "木!",
+        "fact4-content": `木は小さな<strong>種子</strong>として始まります。水、太陽、土があれば、大きな背の高い木に成長します！
+
+木は太陽光を使って独自の食べ物を作ります！これは<strong>光合成</strong>と呼ばれます（こうごうせい）。🌞
+
+毎年、幹の内側に新しい輪が成長します。輪を数えることで木の年齢を知ることができます！🔍`,
+        "fact5-heading": "楽しい木の事実!",
+        "fact5-1": "世界で<strong>最も背の高い木</strong>は30階建てのビルより背が高いです！これらはセコイアと呼ばれています。",
+        "fact5-2": "<strong>樹齢5,000年以上の木</strong>もあります！ピラミッドが建てられたときに生きていました。",
+        "fact5-3": "木は<strong>リンゴ、オレンジ、チェリー、ナッツなどのおいしい食べ物を</strong>与えてくれます！",
+        "fact5-4": "1つの大きな木は<strong>何百もの動物の</strong>家になることができます：鳥、リス、虫など！",
+        "fact5-5": "木は<strong>空気をきれいにします</strong>！彼らは悪い空気を吸い込み、私たちのために新鮮な空気を吐き出します。",
+        "fact6-heading": "木が重要な理由",
+        "fact6-intro": "木は<strong>私たちの惑星にとって非常に重要です</strong>！理由は次のとおりです：",
+        "fact6-1": "彼らは呼吸する<strong>酸素</strong>を私たちに与えます",
+        "fact6-2": "彼らは地球を<strong>涼しく</strong>保ちます",
+        "fact6-3": "彼らは<strong>家</strong>を動物に与えます",
+        "fact6-4": "彼らは<strong>洪水</strong>を止めます",
+        "fact6-final": "🌳 今日、木を植えてください！🌳",
+        "fact6-final-text": "すべての木が私たちの世界をより良くするのを助けます！",
+        "footer-text": "自然について学び続けてください！🌿"
+      }
+    };
+
+    function translatePage(langCode) {
+      const lang = translations[langCode] || translations["en-US"];
+      
+      // Update main elements
+      document.getElementById('main-title').textContent = lang['main-title'];
+      document.getElementById('subtitle').textContent = lang['subtitle'];
+      
+      // Update language button labels
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        const btnLang = btn.dataset.lang;
+        if (btnLang === 'en-US') btn.textContent = lang['language-en'];
+        else if (btnLang === 'zh-CN') btn.textContent = lang['language-zh'];
+        else if (btnLang === 'th-TH') btn.textContent = lang['language-th'];
+        else if (btnLang === 'ja-JP') btn.textContent = lang['language-ja'];
+      });
+      
+      // Fact 1 - What is a Tree?
+      const fact1Btn = document.querySelector('[onclick="toggleFact(\'fact1\'"]');
+      if (fact1Btn) fact1Btn.querySelector('h2').textContent = lang['fact1-heading'];
+      const fact1Content = document.getElementById('fact1');
+      if (fact1Content) {
+        fact1Content.querySelector('.bg-green-50').innerHTML = lang['fact1-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-green-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact 2 - Parts of a Tree
+      const fact2Btn = document.querySelector('[onclick="toggleFact(\'fact2\'"]');
+      if (fact2Btn) fact2Btn.querySelector('h2').textContent = lang['fact2-heading'];
+      const fact2Content = document.getElementById('fact2');
+      if (fact2Content) {
+        const parts = fact2Content.querySelectorAll('.grid.md\\:grid-cols-3 > .bg-white');
+        if (parts[0]) {
+          parts[0].querySelector('h3').textContent = lang['crown-title'];
+          const crownParagraph = parts[0].querySelector('p');
+          if (crownParagraph) crownParagraph.innerHTML = lang['crown-text'];
+        }
+        if (parts[1]) {
+          parts[1].querySelector('h3').textContent = lang['trunk-title'];
+          const trunkParagraph = parts[1].querySelector('p');
+          if (trunkParagraph) trunkParagraph.innerHTML = lang['trunk-text'];
+        }
+        if (parts[2]) {
+          parts[2].querySelector('h3').textContent = lang['roots-title'];
+          const rootsParagraph = parts[2].querySelector('p');
+          if (rootsParagraph) rootsParagraph.innerHTML = lang['roots-text'];
+        }
+      }
+      
+      // Fact Roots - All About Roots
+      const factRootsBtn = document.querySelector('[onclick="toggleFact(\'fact-roots\'"]');
+      if (factRootsBtn) factRootsBtn.querySelector('h2').textContent = lang['fact-roots-heading'];
+      const factRootsContent = document.getElementById('fact-roots');
+      if (factRootsContent) {
+        factRootsContent.querySelector('.bg-blue-50').innerHTML = lang['fact-roots-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-blue-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact Trunk - All About the Trunk
+      const factTrunkBtn = document.querySelector('[onclick="toggleFact(\'fact-trunk\'"]');
+      if (factTrunkBtn) factTrunkBtn.querySelector('h2').textContent = lang['fact-trunk-heading'];
+      const factTrunkContent = document.getElementById('fact-trunk');
+      if (factTrunkContent) {
+        factTrunkContent.querySelector('.bg-red-50').innerHTML = lang['fact-trunk-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-red-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact Crown - All About the Crown
+      const factCrownBtn = document.querySelector('[onclick="toggleFact(\'fact-crown\'"]');
+      if (factCrownBtn) factCrownBtn.querySelector('h2').textContent = lang['fact-crown-heading'];
+      const factCrownContent = document.getElementById('fact-crown');
+      if (factCrownContent) {
+        factCrownContent.querySelector('.bg-yellow-50').innerHTML = lang['fact-crown-content']
+          .split('\n\n')
+          .map((p, i) => `<p class="text-lg text-yellow-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+          .join('');
+      }
+      
+      // Fact 3 - Types of Trees
+      const fact3Btn = document.querySelector('[onclick="toggleFact(\'fact3\'"]');
+      if (fact3Btn) fact3Btn.querySelector('h2').textContent = lang['fact3-heading'];
+      const fact3Content = document.getElementById('fact3');
+      if (fact3Content) {
+        const treeTypes = fact3Content.querySelectorAll('.grid.md\\:grid-cols-2 > .bg-white');
+        if (treeTypes[0]) {
+          treeTypes[0].querySelector('h3').textContent = lang['deciduous-title'];
+          treeTypes[0].innerHTML = `<div class="text-center mb-3"><span class="text-5xl">🍁</span></div>
+            <h3 class="font-bold text-orange-800 text-xl text-center">${lang['deciduous-title']}</h3>
+            <p class="text-orange-700 mt-3 leading-relaxed">${lang['deciduous-text']}</p>`;
+        }
+        if (treeTypes[1]) {
+          treeTypes[1].querySelector('h3').textContent = lang['evergreen-title'];
+          treeTypes[1].innerHTML = `<div class="text-center mb-3"><span class="text-5xl">🌲</span></div>
+            <h3 class="font-bold text-green-800 text-xl text-center">${lang['evergreen-title']}</h3>
+            <p class="text-green-700 mt-3 leading-relaxed">${lang['evergreen-text']}</p>`;
+        }
+      }
+      
+      // Fact 4 - How Trees Grow
+      const fact4Btn = document.querySelector('[onclick="toggleFact(\'fact4\'"]');
+      if (fact4Btn) fact4Btn.querySelector('h2').textContent = lang['fact4-heading'];
+      const fact4Content = document.getElementById('fact4');
+      if (fact4Content) {
+        // Update growth stages - find by emoji first
+        const allDivs = fact4Content.querySelectorAll('.flex-wrap .bg-white span');
+        let seedSpan, sproutSpan, saplingSpan, treeSpan;
+        
+        allDivs.forEach(span => {
+          if (span.textContent.includes('🌰')) {
+            seedSpan = span.nextElementSibling;
+          } else if (span.textContent.includes('🌱')) {
+            sproutSpan = span.nextElementSibling;
+          } else if (span.textContent.includes('🪴')) {
+            saplingSpan = span.nextElementSibling;
+          } else if (span.textContent.includes('🌳')) {
+            treeSpan = span.nextElementSibling;
+          }
+        });
+        
+        if (seedSpan) seedSpan.textContent = lang['seed'];
+        if (sproutSpan) sproutSpan.textContent = lang['sprout'];
+        if (saplingSpan) saplingSpan.textContent = lang['sapling'];
+        if (treeSpan) treeSpan.textContent = lang['tree'];
+        
+        const textContent = fact4Content.querySelector('.bg-emerald-50');
+        if (textContent) {
+          textContent.innerHTML = lang['fact4-content']
+            .split('\n\n')
+            .map((p, i) => `<p class="text-lg text-emerald-800 leading-relaxed${i > 0 ? ' mt-3' : ''}">${p}</p>`)
+            .join('');
+        }
+      }
+      
+      // Fact 5 - Fun Tree Facts!
+      const fact5Btn = document.querySelector('[onclick="toggleFact(\'fact5\'"]');
+      if (fact5Btn) fact5Btn.querySelector('h2').textContent = lang['fact5-heading'];
+      const fact5Content = document.getElementById('fact5');
+      if (fact5Content) {
+        const factBoxes = fact5Content.querySelectorAll('.grid > .bg-white');
+        if (factBoxes[0]) factBoxes[0].querySelector('p').innerHTML = lang['fact5-1'];
+        if (factBoxes[1]) factBoxes[1].querySelector('p').innerHTML = lang['fact5-2'];
+        if (factBoxes[2]) factBoxes[2].querySelector('p').innerHTML = lang['fact5-3'];
+        if (factBoxes[3]) factBoxes[3].querySelector('p').innerHTML = lang['fact5-4'];
+        if (factBoxes[4]) factBoxes[4].querySelector('p').innerHTML = lang['fact5-5'];
+      }
+      
+      // Fact 6 - Why Trees Matter
+      const fact6Btn = document.querySelector('[onclick="toggleFact(\'fact6\'"]');
+      if (fact6Btn) fact6Btn.querySelector('h2').textContent = lang['fact6-heading'];
+      const fact6Content = document.getElementById('fact6');
+      if (fact6Content) {
+        const tealContent = fact6Content.querySelector('.bg-teal-50');
+        
+        // Update intro text
+        const introP = tealContent.querySelector('p:first-of-type');
+        if (introP) introP.innerHTML = lang['fact6-intro'];
+        
+        // Update grid items
+        const gridBoxes = tealContent.querySelectorAll('.grid > .bg-white');
+        if (gridBoxes[0]) {
+          const p = gridBoxes[0].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-1'];
+        }
+        if (gridBoxes[1]) {
+          const p = gridBoxes[1].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-2'];
+        }
+        if (gridBoxes[2]) {
+          const p = gridBoxes[2].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-3'];
+        }
+        if (gridBoxes[3]) {
+          const p = gridBoxes[3].querySelector('p');
+          if (p) p.innerHTML = lang['fact6-4'];
+        }
+        
+        // Update final section
+        const finalBox = tealContent.querySelector('.mt-4.bg-white');
+        if (finalBox) {
+          const finalP = finalBox.querySelector('p:first-of-type');
+          const finalTextP = finalBox.querySelector('p:nth-of-type(2)');
+          if (finalP) finalP.textContent = lang['fact6-final'];
+          if (finalTextP) finalTextP.textContent = lang['fact6-final-text'];
+        }
+      }
+      
+      // Footer
+      const footerText = document.querySelector('footer p:nth-of-type(2)');
+      if (footerText) {
+        footerText.textContent = lang['footer-text'];
+      }
+    }
+
+    function changeLanguage(langCode) {
+      selectedLanguage = langCode;
+      
+      // Update button styles
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        if (btn.dataset.lang === langCode) {
+          btn.classList.add('active');
+          btn.className = 'language-btn active px-4 py-2 rounded-lg bg-white/90 text-gray-800 font-medium border-2 border-white shadow-md cursor-pointer hover:bg-white transition';
+        } else {
+          btn.classList.remove('active');
+          btn.className = 'language-btn px-4 py-2 rounded-lg bg-white/50 text-gray-600 font-medium border-2 border-white/50 shadow-md cursor-pointer hover:bg-white/70 transition';
+        }
+      });
+      
+      // Translate page content
+      translatePage(langCode);
+      
+      // Footer
+      const footerText = document.querySelector('footer p:nth-of-type(2)');
+      if (footerText && lang['footer-text']) {
+        footerText.textContent = lang['footer-text'];
+      }
+    }
+
+    function toggleFact(factId, btn) {
+      const content = document.getElementById(factId);
+      const arrow = btn.querySelector('span:last-child');
+
+      content.classList.toggle('open');
+
+      if (content.classList.contains('open')) {
+        arrow.textContent = '➖';
+        arrow.style.transform = 'rotate(180deg)';
+        playAudio(factId);
+      } else {
+        arrow.textContent = '➕';
+        arrow.style.transform = 'rotate(0deg)';
+        stopAudio();
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const title = document.getElementById('main-title');
+          const subtitle = document.getElementById('subtitle');
+          const wrapper = document.getElementById('app-wrapper');
+
+          if (title) {
+            title.textContent = config.main_title || defaultConfig.main_title;
+          }
+          if (subtitle) {
+            subtitle.textContent = config.subtitle || defaultConfig.subtitle;
+          }
+
+          const font = config.font_family || defaultConfig.font_family;
+          document.querySelectorAll('*').forEach(el => {
+            el.style.fontFamily = `${font}, sans-serif`;
+          });
+
+          const bgColor = config.background_color || defaultConfig.background_color;
+          if (wrapper) {
+            wrapper.style.background = `linear-gradient(180deg, ${bgColor} 0%, #98D8AA 50%, #4A7C59 100%)`;
+          }
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.card_color || defaultConfig.card_color,
+              set: (value) => {
+                config.card_color = value;
+                window.elementSdk.setConfig({ card_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            },
+            {
+              get: () => config.button_color || defaultConfig.button_color,
+              set: (value) => {
+                config.button_color = value;
+                window.elementSdk.setConfig({ button_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["main_title", config.main_title || defaultConfig.main_title],
+          ["subtitle", config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d457c0916b3577a',t:'MTc3MjE3MjI2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
